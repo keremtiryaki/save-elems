@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible"
+      content="IE=edge">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+    <title>save my changes</title>
+  </head>
+
+  <body>
+    <h1>
+      Are you playing with fire?🔥
+    </h1>
+    <p>
+      Editing HTML with Chrome DevTools is fun until you reload the page and lose all your changes.
+    </p>
+    <hr>
+    here is a bookmarklet that saves your changes every 3 seconds.
+    <br>
+    <a id="save-elem-link">
+      🧯save-elems
+    </a>
+    👈 Drag and drop this link to your bookmark bar.
+    <hr>
+    How does it work?
+    <br>
+    Once you click on the bookmarklet, it checks the HTML source every 3 seconds.
+    <br>
+    If there is any change, it saves it to the localStorage.
+    <br>
+    Once you reload the page and click on the bookmarklet, it will update the HTML with the saved HTML.
+    <hr>
+    <video class="w-full rounded-lg"
+      autoplay=""
+      muted=""
+      loop=""
+      poster="/poster.jpg"
+      playsinline=""
+      controls=""
+      style="max-width: 500px;">
+      <source src="/demo.mp4"
+        type="video/mp4">
+    </video>
+    <hr>
+    here is the source code of the bookmarklet:
+    <pre id="js-src">
+    </pre>
+    <script>
+      var soruceCode = `
+// check if myHTMLSource exists in localStorage and update the html
+if (localStorage.hasOwnProperty('myHTMLSource')) {
+  // update all html with myHTMLSource
+  document.open("text/html", "replace");
+  document.write(localStorage.getItem('myHTMLSource'));
+  document.close()
+}
+// check every 3 seconds and save it to the localStorage
+setInterval(() => {
+  var documentHTML = document.documentElement.outerHTML;
+  if (localStorage.getItem('myHTMLSource') !== documentHTML) {
+    localStorage.setItem('myHTMLSource', documentHTML);
+  }
+}, 3000)
+`;
+      document.getElementById('js-src').innerText = soruceCode.toString();
+      var output = "javascript:" + encodeURIComponent("(function(){" + soruceCode.toString() + "})();");
+      document.getElementById('save-elem-link').setAttribute('href', output);
+    </script>
+    <hr>
+    <a href="https://twitter.com/mijustin/status/1654181241288269824"
+      target="_blank">inspired by this tweet</a>
+    <style>
+      .by-keremtiryaki {
+        display: block;
+        padding: 7px;
+        font-size: 12px;
+        margin: 0;
+        background: #fff;
+        color: #000;
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        border-top-left-radius: 12px;
+        z-index: 100;
+        font-weight: bold;
+        text-decoration: none;
+        border-top: 1px solid #ccc;
+        border-left: 1px solid #ccc;
+      }
+
+    </style>
+    <a class="by-keremtiryaki"
+      href="https://twitter.com/keremtiryaki"
+      target="_blank">
+      @keremtiryaki
+    </a>
+  </body>
+
+</html>
